@@ -1,0 +1,13 @@
+[log]
+level = "info"
+
+[log.stdout]
+
+[metrics]
+uri = "/metrics"
+namespace = "example"
+
+[httpserver]
+addr = "0.0.0.0:8899"
+enable_debug = true
+enable_healthcheck = true

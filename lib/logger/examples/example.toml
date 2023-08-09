@@ -1,0 +1,13 @@
+
+[stdout]
+level = "INFO"
+
+[file.all]
+level = "DEBUG"
+filename = "file.debug.log"
+maxlines = 20
+
+[dingding.panic]
+level = "ALERT"
+key = "panic"
+url = "https://oapi.dingtalk.com/robot/send?access_token=279447901909d8c7473181da57201c4ea30349a2b74f31f3b3e217ce61539345"
