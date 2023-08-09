@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+option go_package = "base/";
+
+message BaseLp {
+    // @gotags: gorm:"index"
+    uint64 index = 1;
+    string usdt = 2;
+    string cnt = 3;
+}
+
+// Msg defines the Msg service.
+service Msg {
+    rpc BaseLp (MsgBaseLp) returns (MsgBaseLpResponse);
+}
+
+message MsgBaseLp {
+}
+
+message MsgBaseLpResponse {}

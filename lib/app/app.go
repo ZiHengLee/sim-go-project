@@ -22,15 +22,6 @@ import (
 	stime "github.com/capell/capell_scan/lib/time"
 )
 
-func Assert(tips string, err error) {
-	if err != nil {
-		logger.Error("%s err:%v", tips, err)
-		log.Fatalf("%s err:%v", tips, err)
-	} else {
-		logger.Info("%s", tips)
-	}
-}
-
 type App struct {
 	opt        *Option
 	httpServ   *httpserver.HttpServer

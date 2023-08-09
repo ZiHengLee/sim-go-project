@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 	"github.com/capell/capell_scan/lib/discovery"
-	"github.com/capell/capell_scan/proto/swap"
+	"github.com/capell/capell_scan/proto/base"
 	"github.com/sirupsen/logrus"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
@@ -18,7 +18,7 @@ var (
 	ctx        context.Context
 	CancelFunc context.CancelFunc
 
-	SwapClient swap.MsgClient
+	SwapClient base.MsgClient
 )
 
 func Init() {
@@ -27,7 +27,7 @@ func Init() {
 	ctx, CancelFunc = context.WithTimeout(context.Background(), 3*time.Second)
 
 	defer Register.Close()
-	initClient("swap", &SwapClient)
+	initClient("base", &SwapClient)
 }
 
 func initClient(serviceName string, client interface{}) {
@@ -37,8 +37,8 @@ func initClient(serviceName string, client interface{}) {
 		panic(err)
 	}
 	switch c := client.(type) {
-	case *swap.MsgClient:
-		*c = swap.NewMsgClient(conn)
+	case *base.MsgClient:
+		*c = base.NewMsgClient(conn)
 	default:
 		panic("unsupported client type")
 	}

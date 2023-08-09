@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/capell/capell_scan/gateway/app"
+	"github.com/capell/capell_scan/service/base/app"
 	"time"
 )
 
