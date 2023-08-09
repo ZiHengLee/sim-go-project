@@ -12,6 +12,4 @@ type Option struct {
 	//Model   model.Option   `toml:"model"`
 	Worker  worker.Option   `toml:"worker"`
 	Handler *handler.Option `toml:"handler"`
-	//
-	//EthClient *ethclient.Option `toml:"eth_client"`
 }

@@ -25,7 +25,10 @@ func (a App) Start() {
 		logger.Error("init handler err:%v", err)
 		return
 	}
-	rpc.Init()
+	if a.opt.Etcd != nil {
+		rpc.Init([]string{a.opt.Etcd.Addr})
+		logger.Info("init etcd success:%v", a.opt.Etcd.Addr)
+	}
 	handler.Route(a.HttpServer().Engine())
 	a.Run()
 }

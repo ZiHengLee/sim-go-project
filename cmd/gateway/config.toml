@@ -1,5 +1,15 @@
+[log]
+level = "info"
+
+[log.file.basic]
+level = "info"
+filename = "./prod.log"
+
 [httpserver]
 addr = "0.0.0.0:6001"
 enable_debug = true
 
 [handler.base]
+
+[etcd]
+addr = "0.0.0.0:2379"

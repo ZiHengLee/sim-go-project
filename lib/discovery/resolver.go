@@ -30,12 +30,11 @@ type Resolver struct {
 }
 
 // NewResolver create a new resolver.Builder base on etcd
-func NewResolver(etcdAddrs []string, logger *logrus.Logger) *Resolver {
+func NewResolver(etcdAddrs []string) *Resolver {
 	return &Resolver{
 		schema:      schema,
 		EtcdAddrs:   etcdAddrs,
 		DialTimeout: 3,
-		logger:      logger,
 	}
 }
 

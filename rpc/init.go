@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"github.com/capell/capell_scan/lib/discovery"
 	"github.com/capell/capell_scan/proto/base"
-	"github.com/sirupsen/logrus"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 	"google.golang.org/grpc/resolver"
@@ -21,8 +20,8 @@ var (
 	SwapClient base.MsgClient
 )
 
-func Init() {
-	Register = discovery.NewResolver([]string{"0.0.0.0:2379"}, logrus.New())
+func Init(addrs []string) {
+	Register = discovery.NewResolver(addrs)
 	resolver.Register(Register)
 	ctx, CancelFunc = context.WithTimeout(context.Background(), 3*time.Second)
 

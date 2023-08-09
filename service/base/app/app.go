@@ -5,7 +5,6 @@ import (
 	"github.com/capell/capell_scan/lib/app"
 	"github.com/capell/capell_scan/lib/discovery"
 	"github.com/capell/capell_scan/lib/logger"
-	"github.com/capell/capell_scan/rpc"
 	"github.com/capell/capell_scan/service/base/handler"
 	"github.com/capell/capell_scan/service/worker"
 	"log"
@@ -32,22 +31,26 @@ func (a App) Start() {
 	path := "/" + a.opt.Handler.Name
 	h.Route(a.HttpServer().Engine().Group(path))
 
-	rpc.Init()
-	etcdRegister := discovery.NewRegister([]string{"0.0.0.0:2379"})
-	defer etcdRegister.Stop()
-	taskNode := discovery.Server{
-		Name: "base",
-		Addr: "0.0.0.0:10002",
+	if a.opt.Etcd != nil {
+		etcdUrl := a.opt.Etcd.Addr
+		etcdRegister := discovery.NewRegister([]string{etcdUrl})
+		defer etcdRegister.Stop()
+		baseNode := discovery.Server{
+			Name: a.opt.Handler.Name,
+			Addr: a.opt.GrpcServer.Addr,
+		}
+		if _, err := etcdRegister.Register(baseNode, 10); err != nil {
+			panic(fmt.Sprintf("start server failed, err: %v", err))
+		}
+		logger.Info("init etcd success")
 	}
-	if _, err := etcdRegister.Register(taskNode, 10); err != nil {
-		panic(fmt.Sprintf("start server failed, err: %v", err))
-	}
-	logger.Info("init worker")
+
 	err = worker.Init(&a, &a.opt.Worker)
 	if err != nil {
 		logger.Error("init worker err:%v", err)
 		return
 	}
+	logger.Info("init worker success")
 	go worker.Run()
 	a.Run()
 }
